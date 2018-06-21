@@ -3,20 +3,17 @@
 
 #include "Badge.h"
 #include "matrixAnimation.h"
-#include "sample-animation-spinner-small.h"
-#include "frame-letters.h"
 #include "matrixScroller.h"
 #include "frame-usaflagwave.h"
 #include "frame-saturn5.h"
 
 Badge badge;
 
-const uint8_t DEMO_WIPE = 0;
-const uint8_t DEMO_USAFLAG = 1;
-const uint8_t DEMO_LETTERS = 2;
-const uint8_t DEMO_SCROLLER = 3;
-const uint8_t DEMO_SATURN5 = 4;
-const uint8_t num_demos = 5;
+const uint8_t DEMO_USAFLAG = 0;
+const uint8_t DEMO_SCROLLER = 1;
+const uint8_t DEMO_SATURN5 = 2;
+const uint8_t DEMO_WIPE = 3;
+const uint8_t num_demos = 3;
 
 // runtime variables
 uint8_t cur_demo = DEMO_USAFLAG;
@@ -28,13 +25,12 @@ uint16_t msg_idx = 0;
 uint8_t flagreps_cur = 0;
 #define FLAGREPS_TOTAL 6
 
-MatrixScroller scroller(" !@#$%^&*()[]<>{}+-=_?/\\:;,.`'\"|~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 8008135!  ");
+MatrixScroller scroller(" Happy Independence Day!  ");
 
 void setup()
 {
     badge.begin();
     badge.matrix.setBrightness(100);
-    letter_animation.decompress();  // decompress the RLE data so we can pick specific frames
 }
 
 void loop()
@@ -81,24 +77,8 @@ void loop()
         cur_demo++;
       }
     }
-  } else if(cur_demo == DEMO_LETTERS) {
-    update_frequency = 200; // update every 200ms
-    const char msg[] = "IT WORKS";
-    // show the next letter of the string
-    char curLetter = msg[msg_idx];
-    uint8_t frameNo = curLetter - 'A';
-    String DEBUG = "DEBUG: ";
-    Serial.println(DEBUG + "drawing letter " + curLetter + ", frame=" + frameNo);
-    letter_animation.setFrameIndex(frameNo);
-    letter_animation.draw(badge.matrix);
-    msg_idx++;
-    // when we've reached the end of the string, move to the next demo
-    if(msg_idx >= strlen(msg)) {
-      msg_idx = 0;
-      cur_demo++;
-    }
   } else if(cur_demo == DEMO_SCROLLER) {
-    update_frequency = 150; // update every 100ms
+    update_frequency = 80; // update every Xms
     scroller.draw(badge.matrix);
     if(scroller.getPosition() == 0) {
       // the scroller has completed one play-through, switch to the next demo
