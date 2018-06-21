@@ -7,6 +7,7 @@
 #include "frame-letters.h"
 #include "matrixScroller.h"
 #include "frame-usaflagwave.h"
+#include "frame-saturn5.h"
 
 Badge badge;
 
@@ -14,7 +15,8 @@ const uint8_t DEMO_WIPE = 0;
 const uint8_t DEMO_USAFLAG = 1;
 const uint8_t DEMO_LETTERS = 2;
 const uint8_t DEMO_SCROLLER = 3;
-const uint8_t num_demos = 2;
+const uint8_t DEMO_SATURN5 = 4;
+const uint8_t num_demos = 5;
 
 // runtime variables
 uint8_t cur_demo = DEMO_USAFLAG;
@@ -100,6 +102,14 @@ void loop()
     scroller.draw(badge.matrix);
     if(scroller.getPosition() == 0) {
       // the scroller has completed one play-through, switch to the next demo
+      cur_demo++;
+    }
+  } else if (cur_demo = DEMO_SATURN5) {
+    update_frequency = animation_saturn5.getFrameDelay();
+    // draw the next frame of the animation
+    animation_saturn5.draw(badge.matrix);
+    if(animation_saturn5.getFrameIndex() == 0) {
+      // the animation has completed one play-through, switch to the next demo
       cur_demo++;
     }
   }
