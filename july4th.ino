@@ -6,6 +6,7 @@
 #include "matrixScroller.h"
 #include "frame-usaflagwave.h"
 #include "frame-saturn5.h"
+#include "frame-tank.h"
 #include "frame-boobies.h"
 
 Badge badge;
@@ -13,7 +14,8 @@ Badge badge;
 const uint8_t DEMO_USAFLAG = 0;
 const uint8_t DEMO_SCROLLER = 1;
 const uint8_t DEMO_SATURN5 = 2;
-const uint8_t num_demos = 3;
+const uint8_t DEMO_TANK = 3;
+const uint8_t num_demos = 4;
 const uint8_t DEMO_BOOBIES = 99;  // not part of normal rotation
 
 // runtime variables
@@ -73,6 +75,14 @@ void loop()
     // draw the next frame of the animation
     animation_saturn5.draw(badge.matrix);
     if(animation_saturn5.getFrameIndex() == 0) {
+      // the animation has completed one play-through, switch to the next demo
+      cur_demo++;
+    }
+  } else if (cur_demo == DEMO_TANK) {
+    update_frequency = animation_tank.getFrameDelay();
+    // draw the next frame of the animation
+    animation_tank.draw(badge.matrix);
+    if(animation_tank.getFrameIndex() == 0) {
       // the animation has completed one play-through, switch to the next demo
       cur_demo++;
     }

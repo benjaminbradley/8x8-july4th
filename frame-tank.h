@@ -1,4 +1,4 @@
-const uint8_t animationData[] PROGMEM = {
+const uint8_t animationData_tank[] PROGMEM = {
 // Frame: 0
     7, 0x00, 0x00,
     1, 0x98, 0x00,
@@ -219,4 +219,4 @@ const uint8_t animationData[] PROGMEM = {
     1, 0xef, 0xe0,
 };
 
-Animation animation(9, animationData, Animation::RGB565_RLE, 64, 142);
+MatrixAnimation animation_tank(9, animationData_tank, MatrixAnimation::RGB565_RLE, 64, 142);
