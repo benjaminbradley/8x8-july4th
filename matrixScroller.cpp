@@ -57,7 +57,7 @@ void MatrixScroller::draw(RGBMatrix &matrix)
   
   position++;
   // check for wrap-around
-  if(position >= (message.length()+1)*(CHAR_WIDTH+1)) {
+  if((position + LED_COLS - 1) >= (message.length()*(CHAR_WIDTH+1))) {
     position = 0;
   }
 };
